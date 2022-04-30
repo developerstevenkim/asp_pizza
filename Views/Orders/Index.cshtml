@@ -18,24 +18,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdPizs)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.dateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                </td>
+                <td>
+                    
+                    @for (var i = 0; i < item.OrdPizs.Count; i++)
+                    {
+                        @Html.Raw("Hello")
+                        @Html.DisplayFor(modelItem => item.OrdPizs[i].PizzaId, "MyTemplate")
+                        @Html.Raw("<br>")
+                    }
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

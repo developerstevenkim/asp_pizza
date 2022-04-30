@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Avesdo.Migrations
+namespace Avesdo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220430103449_“try”")]
-    partial class @try
+    [Migration("20220430183446_“First”")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
