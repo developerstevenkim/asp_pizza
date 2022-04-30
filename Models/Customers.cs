@@ -7,7 +7,7 @@ namespace Avesdo.Models
     public class Customers
     {
         [Key]
-        public int Customer_id { get; set; }
+        public int CustomerId { get; set; }
         public string Customer_name { get; set; }
         public string Phone_number { get; set; }
         public int Suite { get; set; }

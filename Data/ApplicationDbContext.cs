@@ -20,20 +20,20 @@ namespace Avesdo.Data
             builder.Entity<OrdPiz>()
                 .HasOne(o => o.Order)
                 .WithMany(op => op.OrdPizs)
-                .HasForeignKey(f => f.Order_id);
+                .HasForeignKey(f => f.OrderId);
             builder.Entity<OrdPiz>()
                 .HasOne(p => p.Pizza)
                 .WithMany(op => op.OrdPizs)
-                .HasForeignKey(f => f.Pizza_id);
+                .HasForeignKey(f => f.PizzaId);
 
             builder.Entity<PizTop>()
                 .HasOne(p => p.Pizza)
                 .WithMany(pt => pt.PizTops)
-                .HasForeignKey(f => f.Pizza_title);
+                .HasForeignKey(f => f.PizzaId);
             builder.Entity<PizTop>()
                 .HasOne(t => t.Topping)
                 .WithMany(pt => pt.PizTops)
-                .HasForeignKey(f => f.Topping_title);
+                .HasForeignKey(f => f.ToppingId);
         }
 
         public DbSet<Pizzas> Pizzas { get; set; }

@@ -3,20 +3,109 @@ using System;
 using Avesdo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Avesdo.Data.Migrations
+namespace Avesdo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220430103449_“try”")]
+    partial class @try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.10");
 
-            modelBuilder.Entity("Avesdo.Models.Pizza", b =>
+            modelBuilder.Entity("Avesdo.Models.Customers", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Customer_name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone_number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Suite")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Zip_code")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.OrdPiz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PizzaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PizzaId");
+
+                    b.ToTable("OrdPizs");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Orders", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("dateTime")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.PizTop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PizzaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ToppingId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PizzaId");
+
+                    b.HasIndex("ToppingId");
+
+                    b.ToTable("PizTops");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Pizzas", b =>
                 {
                     b.Property<int>("PizzaId")
                         .ValueGeneratedOnAdd()
@@ -28,12 +117,26 @@ namespace Avesdo.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Topping")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("PizzaId");
 
                     b.ToTable("Pizzas");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Toppings", b =>
+                {
+                    b.Property<int>("ToppingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ToppingId");
+
+                    b.ToTable("Toppings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -232,6 +335,55 @@ namespace Avesdo.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Avesdo.Models.OrdPiz", b =>
+                {
+                    b.HasOne("Avesdo.Models.Orders", "Order")
+                        .WithMany("OrdPizs")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Avesdo.Models.Pizzas", "Pizza")
+                        .WithMany("OrdPizs")
+                        .HasForeignKey("PizzaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Pizza");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Orders", b =>
+                {
+                    b.HasOne("Avesdo.Models.Customers", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.PizTop", b =>
+                {
+                    b.HasOne("Avesdo.Models.Pizzas", "Pizza")
+                        .WithMany("PizTops")
+                        .HasForeignKey("PizzaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Avesdo.Models.Toppings", "Topping")
+                        .WithMany("PizTops")
+                        .HasForeignKey("ToppingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pizza");
+
+                    b.Navigation("Topping");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -281,6 +433,28 @@ namespace Avesdo.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Customers", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Orders", b =>
+                {
+                    b.Navigation("OrdPizs");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Pizzas", b =>
+                {
+                    b.Navigation("OrdPizs");
+
+                    b.Navigation("PizTops");
+                });
+
+            modelBuilder.Entity("Avesdo.Models.Toppings", b =>
+                {
+                    b.Navigation("PizTops");
                 });
 #pragma warning restore 612, 618
         }

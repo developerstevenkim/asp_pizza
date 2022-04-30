@@ -8,10 +8,10 @@ namespace Avesdo.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string Order_id { get; set; }
+        public int OrderId { get; set; }
         public Orders Order { get; set; }
         [Required]
-        public string Pizza_id { get; set; }
+        public int PizzaId { get; set; }
         public Pizzas Pizza { get; set; }
     }
 }

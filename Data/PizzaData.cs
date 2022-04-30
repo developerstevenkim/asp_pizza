@@ -9,23 +9,19 @@ namespace Avesdo.Data
             if (!db.Pizzas.Any()) {
                 db.Pizzas.Add(new Pizzas {
                     Title = "Hawaian",
-                    Price = 9.99f,
-                    Topping = "PineApple"
+                    Price = 9.99f
                 });
                 db.Pizzas.Add(new Pizzas {
                     Title = "Pepperoni",
-                    Price = 8.99f,
-                    Topping = "Peppers"
+                    Price = 8.99f
                 });
                 db.Pizzas.Add(new Pizzas {
                     Title = "Cheese",
-                    Price = 12.99f,
-                    Topping = "mozzarella"
+                    Price = 12.99f
                 });
                 db.Pizzas.Add(new Pizzas {
                     Title = "Veggie",
-                    Price = 13.99f,
-                    Topping = "Mushroom"
+                    Price = 13.99f
                 });
                 db.SaveChanges();
             }

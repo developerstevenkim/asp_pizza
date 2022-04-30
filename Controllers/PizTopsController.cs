@@ -10,22 +10,23 @@ using Avesdo.Models;
 
 namespace Avesdo.Controllers
 {
-    public class PizzasController : Controller
+    public class PizTopsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PizzasController(ApplicationDbContext context)
+        public PizTopsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pizzas
+        // GET: PizTops
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pizzas.ToListAsync());
+            var applicationDbContext = _context.PizTops.Include(p => p.Pizza).Include(p => p.Topping);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Pizzas/Details/5
+        // GET: PizTops/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
-            if (pizzas == null)
+            var pizTop = await _context.PizTops
+                .Include(p => p.Pizza)
+                .Include(p => p.Topping)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (pizTop == null)
             {
                 return NotFound();
             }
 
-            return View(pizzas);
+            return View(pizTop);
         }
 
-        // GET: Pizzas/Create
+        // GET: PizTops/Create
         public IActionResult Create()
         {
+            ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId");
+            ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId");
             return View();
         }
 
-        // POST: Pizzas/Create
+        // POST: PizTops/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PizzaId,Title,Price")] Pizzas pizzas)
+        public async Task<IActionResult> Create([Bind("Id,PizzaId,ToppingId")] PizTop pizTop)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pizzas);
+                _context.Add(pizTop);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pizzas);
+            ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId", pizTop.PizzaId);
+            ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId", pizTop.ToppingId);
+            return View(pizTop);
         }
 
-        // GET: Pizzas/Edit/5
+        // GET: PizTops/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,24 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas.FindAsync(id);
-            if (pizzas == null)
+            var pizTop = await _context.PizTops.FindAsync(id);
+            if (pizTop == null)
             {
                 return NotFound();
             }
-            return View(pizzas);
+            ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId", pizTop.PizzaId);
+            ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId", pizTop.ToppingId);
+            return View(pizTop);
         }
 
-        // POST: Pizzas/Edit/5
+        // POST: PizTops/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PizzaId,Title,Price")] Pizzas pizzas)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PizzaId,ToppingId")] PizTop pizTop)
         {
-            if (id != pizzas.PizzaId)
+            if (id != pizTop.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace Avesdo.Controllers
             {
                 try
                 {
-                    _context.Update(pizzas);
+                    _context.Update(pizTop);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PizzasExists(pizzas.PizzaId))
+                    if (!PizTopExists(pizTop.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +122,12 @@ namespace Avesdo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pizzas);
+            ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId", pizTop.PizzaId);
+            ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId", pizTop.ToppingId);
+            return View(pizTop);
         }
 
-        // GET: Pizzas/Delete/5
+        // GET: PizTops/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +135,32 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
-            if (pizzas == null)
+            var pizTop = await _context.PizTops
+                .Include(p => p.Pizza)
+                .Include(p => p.Topping)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (pizTop == null)
             {
                 return NotFound();
             }
 
-            return View(pizzas);
+            return View(pizTop);
         }
 
-        // POST: Pizzas/Delete/5
+        // POST: PizTops/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pizzas = await _context.Pizzas.FindAsync(id);
-            _context.Pizzas.Remove(pizzas);
+            var pizTop = await _context.PizTops.FindAsync(id);
+            _context.PizTops.Remove(pizTop);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PizzasExists(int id)
+        private bool PizTopExists(int id)
         {
-            return _context.Pizzas.Any(e => e.PizzaId == id);
+            return _context.PizTops.Any(e => e.Id == id);
         }
     }
 }

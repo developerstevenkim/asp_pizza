@@ -9,9 +9,9 @@ namespace Avesdo.Models
     {
         [Key]
         public int OrderId { get; set; }
-        public DateTime Title { get; set; }
-        public int Customer_id { get; set; }
-        [ForeignKey("Customer_id")]
+        public DateTime dateTime { get; set; }
+        public int CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
         public Customers Customer { get; set; }
         public List<OrdPiz> OrdPizs { get; set; }
     }

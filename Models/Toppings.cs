@@ -7,7 +7,7 @@ namespace Avesdo.Models
     public class Toppings
     {
         [Key]
-        public int Topping_id { get; set; }
+        public int ToppingId { get; set; }
         public string Title { get; set; }
         public float Price { get; set; }
         public List<PizTop> PizTops { get; set; }

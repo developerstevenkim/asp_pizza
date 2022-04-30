@@ -10,22 +10,22 @@ using Avesdo.Models;
 
 namespace Avesdo.Controllers
 {
-    public class PizzasController : Controller
+    public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PizzasController(ApplicationDbContext context)
+        public CustomersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pizzas
+        // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pizzas.ToListAsync());
+            return View(await _context.Customers.ToListAsync());
         }
 
-        // GET: Pizzas/Details/5
+        // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
-            if (pizzas == null)
+            var customers = await _context.Customers
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customers == null)
             {
                 return NotFound();
             }
 
-            return View(pizzas);
+            return View(customers);
         }
 
-        // GET: Pizzas/Create
+        // GET: Customers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pizzas/Create
+        // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PizzaId,Title,Price")] Pizzas pizzas)
+        public async Task<IActionResult> Create([Bind("CustomerId,Customer_name,Phone_number,Suite,Street,Zip_code")] Customers customers)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pizzas);
+                _context.Add(customers);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(pizzas);
+            return View(customers);
         }
 
-        // GET: Pizzas/Edit/5
+        // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas.FindAsync(id);
-            if (pizzas == null)
+            var customers = await _context.Customers.FindAsync(id);
+            if (customers == null)
             {
                 return NotFound();
             }
-            return View(pizzas);
+            return View(customers);
         }
 
-        // POST: Pizzas/Edit/5
+        // POST: Customers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PizzaId,Title,Price")] Pizzas pizzas)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Customer_name,Phone_number,Suite,Street,Zip_code")] Customers customers)
         {
-            if (id != pizzas.PizzaId)
+            if (id != customers.CustomerId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Avesdo.Controllers
             {
                 try
                 {
-                    _context.Update(pizzas);
+                    _context.Update(customers);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PizzasExists(pizzas.PizzaId))
+                    if (!CustomersExists(customers.CustomerId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Avesdo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pizzas);
+            return View(customers);
         }
 
-        // GET: Pizzas/Delete/5
+        // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
 
-            var pizzas = await _context.Pizzas
-                .FirstOrDefaultAsync(m => m.PizzaId == id);
-            if (pizzas == null)
+            var customers = await _context.Customers
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customers == null)
             {
                 return NotFound();
             }
 
-            return View(pizzas);
+            return View(customers);
         }
 
-        // POST: Pizzas/Delete/5
+        // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pizzas = await _context.Pizzas.FindAsync(id);
-            _context.Pizzas.Remove(pizzas);
+            var customers = await _context.Customers.FindAsync(id);
+            _context.Customers.Remove(customers);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PizzasExists(int id)
+        private bool CustomersExists(int id)
         {
-            return _context.Pizzas.Any(e => e.PizzaId == id);
+            return _context.Customers.Any(e => e.CustomerId == id);
         }
     }
 }
