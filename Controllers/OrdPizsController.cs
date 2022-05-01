@@ -51,7 +51,6 @@ namespace Avesdo.Controllers
         {
             ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId");
             ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId");
-            ViewBag.ListOfPizzas = getPizzasSelectList();
             return View();
         }
 
@@ -60,7 +59,7 @@ namespace Avesdo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,PizzaId")] OrdPiz ordPiz)
+        public async Task<IActionResult> Create([Bind("Id,OrderId,PizzaId,Quantity")] OrdPiz ordPiz)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +95,7 @@ namespace Avesdo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,PizzaId")] OrdPiz ordPiz)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,PizzaId,Quantity")] OrdPiz ordPiz)
         {
             if (id != ordPiz.Id)
             {
@@ -162,21 +161,6 @@ namespace Avesdo.Controllers
         private bool OrdPizExists(int id)
         {
             return _context.OrdPizs.Any(e => e.Id == id);
-        }
-
-        private List<SelectListItem> getPizzasSelectList()
-        {
-            List<Pizzas> pizzaList = _context.Pizzas.ToList();
-            List<SelectListItem> list = pizzaList.ConvertAll(a =>
-            {
-                return new SelectListItem()
-                {
-                    Text = a.Title,
-                    Value = a.PizzaId.ToString(),
-                    Selected = false
-                };
-            });
-            return list;
         }
     }
 }

@@ -16,6 +16,6 @@ namespace Avesdo.Models
         [Display(Name = "Pizza ID")]
         public int PizzaId { get; set; }
         public Pizzas Pizza { get; set; }
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace Avesdo.Models
         [Display(Name = "Topping ID")]
         public int ToppingId { get; set; }
         public Toppings Topping { get; set; }
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
     }
 }

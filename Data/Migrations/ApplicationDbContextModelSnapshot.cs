@@ -54,8 +54,8 @@ namespace Avesdo.Data.Migrations
                     b.Property<int>("PizzaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Quantity")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -94,8 +94,8 @@ namespace Avesdo.Data.Migrations
                     b.Property<int>("PizzaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Quantity")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ToppingId")
                         .HasColumnType("INTEGER");

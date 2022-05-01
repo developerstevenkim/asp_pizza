@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Avesdo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220501061418_“First”")]
+    [Migration("20220501065206_“First”")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,8 +56,8 @@ namespace Avesdo.Data.Migrations
                     b.Property<int>("PizzaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Quantity")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -96,8 +96,8 @@ namespace Avesdo.Data.Migrations
                     b.Property<int>("PizzaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Quantity")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ToppingId")
                         .HasColumnType("INTEGER");

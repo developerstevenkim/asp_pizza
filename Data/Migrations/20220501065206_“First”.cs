@@ -225,7 +225,7 @@ namespace Avesdo.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     PizzaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ToppingId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
+                    Quantity = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -252,7 +252,7 @@ namespace Avesdo.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     OrderId = table.Column<int>(type: "INTEGER", nullable: false),
                     PizzaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
+                    Quantity = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
