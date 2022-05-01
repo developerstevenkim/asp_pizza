@@ -13,10 +13,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.dateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.Raw("Pizza")
             </th>
             <th></th>
         </tr>
@@ -25,10 +31,23 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.dateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                @Html.DisplayFor(modelItem => item.Customer.Customer_name)
+            </td>
+            <td>
+                @for (var i = 0; i < item.OrdPizs.Count; i++)
+                {
+                    @Html.Raw("Pizza ID: ")
+                    @Html.DisplayFor(modelItem=>item.OrdPizs[i].PizzaId, "MyTemplate")
+                    @Html.Raw(", Quantity: ")
+                    @Html.DisplayFor(modelItem=>item.OrdPizs[i].Quantity, "MyTemplate")
+                    @Html.Raw("<br>")
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |

@@ -22,7 +22,9 @@ namespace Avesdo.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Orders.Include(o => o.Customer);
+            var applicationDbContext = _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrdPizs);;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +38,7 @@ namespace Avesdo.Controllers
 
             var orders = await _context.Orders
                 .Include(o => o.Customer)
+                .Include(o => o.OrdPizs)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (orders == null)
             {
@@ -48,7 +51,8 @@ namespace Avesdo.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
+            // ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId");
+            ViewBag.ListOfCustomer = getCustomersSelectList();
             return View();
         }
 
@@ -155,6 +159,21 @@ namespace Avesdo.Controllers
         private bool OrdersExists(int id)
         {
             return _context.Orders.Any(e => e.OrderId == id);
+        }
+
+        private List<SelectListItem> getCustomersSelectList()
+        {
+            List<Customers> customerList = _context.Customers.ToList();
+            List<SelectListItem> list = customerList.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Customer_name,
+                    Value = a.CustomerId.ToString(),
+                    Selected = false
+                };
+            });
+            return list;
         }
     }
 }
