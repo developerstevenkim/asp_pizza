@@ -25,7 +25,7 @@ namespace Avesdo.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pizzas>>> GetPizzas()
         {
-            return await _context.Pizzas.ToListAsync();
+            return await _context.Pizzas.Include(o => o.OrdPizs).Include(t => t.PizTops).ToListAsync();
         }
 
         // GET: api/PizzasApi/5

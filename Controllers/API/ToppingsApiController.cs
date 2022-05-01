@@ -25,7 +25,7 @@ namespace Avesdo.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Toppings>>> GetToppings()
         {
-            return await _context.Toppings.ToListAsync();
+            return await _context.Toppings.Include(p => p.PizTops).ToListAsync();
         }
 
         // GET: api/ToppingsApi/5

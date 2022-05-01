@@ -25,7 +25,7 @@ namespace Avesdo.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Orders>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include(op => op.OrdPizs).Include(c => c.Customer).ToListAsync();
         }
 
         // GET: api/OrdersApi/5
