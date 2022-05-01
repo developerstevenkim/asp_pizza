@@ -9,7 +9,10 @@ namespace Avesdo.Models
     {
         [Key]
         public int OrderId { get; set; }
+        [Display(Name = "Date & Time")]
         public DateTime dateTime { get; set; }
+
+        [Display(Name = "Customer ID")]
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public Customers Customer { get; set; }

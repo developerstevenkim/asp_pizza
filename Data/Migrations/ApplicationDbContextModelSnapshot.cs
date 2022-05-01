@@ -3,16 +3,14 @@ using System;
 using Avesdo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Avesdo.Migrations
+namespace Avesdo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220430103449_“try”")]
-    partial class @try
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,6 +54,9 @@ namespace Avesdo.Migrations
                     b.Property<int>("PizzaId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -91,6 +92,9 @@ namespace Avesdo.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PizzaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ToppingId")

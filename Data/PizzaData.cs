@@ -25,6 +25,33 @@ namespace Avesdo.Data
                 });
                 db.SaveChanges();
             }
+            if (!db.Customers.Any()) {
+                db.Customers.Add(new Customers {
+                    Customer_name = "Dohun Kim",
+                    Phone_number = "604 679 4111",
+                    Suite = 302,
+                    Street = "609 Cottonwood Avenue",
+                    Zip_code = "V3J 0H2"
+                });
+            }
+            if (!db.Toppings.Any()) {
+                db.Toppings.Add(new Toppings {
+                    Title = "Mushroom",
+                    Price = 2
+                });
+            }
+            if (!db.Toppings.Any()) {
+                db.Toppings.Add(new Toppings {
+                    Title = "Olive",
+                    Price = 2
+                });
+            }
+            if (!db.Toppings.Any()) {
+                db.Toppings.Add(new Toppings {
+                    Title = "Sausage",
+                    Price = 3
+                });
+            }
         }
     }
 }

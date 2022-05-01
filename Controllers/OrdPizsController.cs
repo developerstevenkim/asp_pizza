@@ -51,6 +51,7 @@ namespace Avesdo.Controllers
         {
             ViewData["OrderId"] = new SelectList(_context.Orders, "OrderId", "OrderId");
             ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId");
+            ViewBag.ListOfPizzas = getPizzasSelectList();
             return View();
         }
 
@@ -161,6 +162,21 @@ namespace Avesdo.Controllers
         private bool OrdPizExists(int id)
         {
             return _context.OrdPizs.Any(e => e.Id == id);
+        }
+
+        private List<SelectListItem> getPizzasSelectList()
+        {
+            List<Pizzas> pizzaList = _context.Pizzas.ToList();
+            List<SelectListItem> list = pizzaList.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Title,
+                    Value = a.PizzaId.ToString(),
+                    Selected = false
+                };
+            });
+            return list;
         }
     }
 }
