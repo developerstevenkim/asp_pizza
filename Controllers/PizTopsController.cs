@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Avesdo.Data;
 using Avesdo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Avesdo.Controllers
 {
-    public class PizTopsController : Controller
+    [Authorize]    public class PizTopsController : Controller
     {
         private readonly ApplicationDbContext _context;
 

@@ -29,6 +29,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Pizzas"
                                 asp-action="Display">HERE</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Pizzas"
+                                asp-action="Index">Pizza</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Toppings"
+                                asp-action="Index">Topping</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Customers"
                                 asp-action="Index">Customer</a>
@@ -38,21 +48,14 @@
                                 asp-action="Index">Order</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Toppings"
-                                asp-action="Index">Topping</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pizzas"
-                                asp-action="Index">Pizza</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="OrdPizs"
-                                asp-action="Index">OrdPiz</a>
+                                asp-action="Index">Ord - Piz</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PizTops"
-                                asp-action="Index">PizTop</a>
+                                asp-action="Index">Piz - Top</a>
                         </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

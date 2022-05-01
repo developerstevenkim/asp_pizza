@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Avesdo.Data;
 using Avesdo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Avesdo.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
