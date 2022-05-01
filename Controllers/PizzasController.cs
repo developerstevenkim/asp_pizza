@@ -26,6 +26,13 @@ namespace Avesdo.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Pizzas
+        public async Task<IActionResult> Display()
+        {
+            var applicationDbContext = _context.Pizzas.Include(p => p.PizTops);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Pizzas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
