@@ -87,6 +87,7 @@ namespace Avesdo.Controllers
                 return NotFound();
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "CustomerId", orders.CustomerId);
+            ViewBag.ListOfCustomer = getCustomersSelectList();
             return View(orders);
         }
 
