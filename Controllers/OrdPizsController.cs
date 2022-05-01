@@ -59,7 +59,7 @@ namespace Avesdo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,PizzaId")] OrdPiz ordPiz)
+        public async Task<IActionResult> Create([Bind("Id,OrderId,PizzaId,Quantity")] OrdPiz ordPiz)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace Avesdo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,PizzaId")] OrdPiz ordPiz)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,PizzaId,Quantity")] OrdPiz ordPiz)
         {
             if (id != ordPiz.Id)
             {
