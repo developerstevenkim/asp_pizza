@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Avesdo.Data;
 using Avesdo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Avesdo.Controllers
 {
@@ -19,6 +20,7 @@ namespace Avesdo.Controllers
             _context = context;
         }
 
+        [Authorize]
         // GET: Pizzas
         public async Task<IActionResult> Index()
         {
@@ -26,6 +28,14 @@ namespace Avesdo.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Pizzas
+        public async Task<IActionResult> Display()
+        {
+            var applicationDbContext = _context.Pizzas.Include(p => p.PizTops);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize]
         // GET: Pizzas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,6 +54,7 @@ namespace Avesdo.Controllers
             return View(pizzas);
         }
 
+        [Authorize]
         // GET: Pizzas/Create
         public IActionResult Create()
         {
@@ -51,6 +62,7 @@ namespace Avesdo.Controllers
             return View();
         }
 
+        [Authorize]
         // POST: Pizzas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -67,6 +79,7 @@ namespace Avesdo.Controllers
             return View(pizzas);
         }
 
+        [Authorize]
         // GET: Pizzas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -83,6 +96,7 @@ namespace Avesdo.Controllers
             return View(pizzas);
         }
 
+        [Authorize]
         // POST: Pizzas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,6 +132,7 @@ namespace Avesdo.Controllers
             return View(pizzas);
         }
 
+        [Authorize]
         // GET: Pizzas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -136,6 +151,7 @@ namespace Avesdo.Controllers
             return View(pizzas);
         }
 
+        [Authorize]
         // POST: Pizzas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

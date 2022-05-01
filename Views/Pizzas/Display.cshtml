@@ -1,0 +1,35 @@
+@model IEnumerable<Avesdo.Models.Pizzas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Order Pizza NOW!</h1>
+
+
+@foreach (var item in Model)
+{
+    <div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+            @if (item.PizzaId == 1)
+            {
+                <img src="~/img/hawaiian.jpg" width="80%">
+            }
+            @if (item.PizzaId == 2) {
+                <img src="~/img/pepperoni.jpeg" width="80%">
+            }
+            @if (item.PizzaId == 3) {
+                <img src="~/img/cheese.jpg" width="80%">
+            }
+            @if (item.PizzaId == 4) {
+                <img src="~/img/vege.jpeg" width="80%">
+            }
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Price)</p>
+            </div>
+            <a href="https://avesdopizza.azurewebsites.net/api/pizzasAPI/@Html.DisplayFor(modelItem => item.PizzaId)" target="_blank">
+                https://avesdopizza.azurewebsites.net/api/pizzasAPI/@Html.DisplayFor(modelItem => item.PizzaId)</a>
+        </div>
+    </div>
+}
