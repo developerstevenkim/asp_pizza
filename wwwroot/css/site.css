@@ -65,6 +65,10 @@ body {
   background-image: url("../img/pizza-icon-sm.png");
   z-index: -1;
 }
+
+div.container {
+  background-color: white;
+}
 .footer {
   position: absolute;
   bottom: 0;
