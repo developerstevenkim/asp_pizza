@@ -51,6 +51,8 @@ namespace Avesdo.Controllers
         {
             ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId");
             ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId");
+            ViewBag.ListOfToppings = getToppingsSelectList();
+            ViewBag.ListOfPizzas = getPizzasSelectList();
             return View();
         }
 
@@ -87,6 +89,8 @@ namespace Avesdo.Controllers
             }
             ViewData["PizzaId"] = new SelectList(_context.Pizzas, "PizzaId", "PizzaId", pizTop.PizzaId);
             ViewData["ToppingId"] = new SelectList(_context.Toppings, "ToppingId", "ToppingId", pizTop.ToppingId);
+            ViewBag.ListOfToppings = getToppingsSelectList();
+            ViewBag.ListOfPizzas = getPizzasSelectList();
             return View(pizTop);
         }
 
@@ -161,6 +165,36 @@ namespace Avesdo.Controllers
         private bool PizTopExists(int id)
         {
             return _context.PizTops.Any(e => e.Id == id);
+        }
+
+        private List<SelectListItem> getToppingsSelectList()
+        {
+            List<Toppings> toppingList = _context.Toppings.ToList();
+            List<SelectListItem> list = toppingList.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Title,
+                    Value = a.ToppingId.ToString(),
+                    Selected = false
+                };
+            });
+            return list;
+        }
+
+        private List<SelectListItem> getPizzasSelectList()
+        {
+            List<Pizzas> pizzaList = _context.Pizzas.ToList();
+            List<SelectListItem> list = pizzaList.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Title,
+                    Value = a.PizzaId.ToString(),
+                    Selected = false
+                };
+            });
+            return list;
         }
     }
 }

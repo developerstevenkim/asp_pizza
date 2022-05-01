@@ -22,7 +22,8 @@ namespace Avesdo.Controllers
         // GET: Pizzas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pizzas.ToListAsync());
+            var applicationDbContext = _context.Pizzas.Include(p => p.PizTops);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Pizzas/Details/5
@@ -46,6 +47,7 @@ namespace Avesdo.Controllers
         // GET: Pizzas/Create
         public IActionResult Create()
         {
+            ViewBag.ListOfToppings = getToppingsSelectList();
             return View();
         }
 
@@ -148,6 +150,21 @@ namespace Avesdo.Controllers
         private bool PizzasExists(int id)
         {
             return _context.Pizzas.Any(e => e.PizzaId == id);
+        }
+
+        private List<SelectListItem> getToppingsSelectList()
+        {
+            List<Toppings> toppingList = _context.Toppings.ToList();
+            List<SelectListItem> list = toppingList.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Title,
+                    Value = a.ToppingId.ToString(),
+                    Selected = false
+                };
+            });
+            return list;
         }
     }
 }
