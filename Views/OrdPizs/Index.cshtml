@@ -7,7 +7,7 @@
 <h1>Order Pizza</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"><button type="button" class="btn btn-primary">Create</button></a>
 </p>
 <table class="table table-hover table-striped">
     <thead>
@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Order.OrderId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pizza.PizzaId)
+                @Html.DisplayFor(modelItem => item.Pizza.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)

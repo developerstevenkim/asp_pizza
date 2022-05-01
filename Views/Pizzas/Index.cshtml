@@ -7,7 +7,7 @@
 <h1>Pizza</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"><button type="button" class="btn btn-primary">Create</button></a>
 </p>
 <table class="table table-hover table-striped">
     <thead>
@@ -18,23 +18,40 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
+            <th>
+                @Html.Raw("Toppings")
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PizzaId"><button type="button" class="btn btn-success">Edit</button></a> |
-                <a asp-action="Delete" asp-route-id="@item.PizzaId"><button type="button" class="btn btn-danger">Delete</button></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @for (var i = 0; i < item.PizTops.Count; i++)
+                    {
+                        @Html.Raw("Topping ID: ")
+                        @Html.DisplayFor(modelItem=>item.PizTops[i].ToppingId, "MyTemplate")
+                        @Html.Raw(", Quantity: ")
+                        @Html.DisplayFor(modelItem=>item.PizTops[i].Quantity, "MyTemplate")
+                        @Html.Raw("<br>")
+                    }
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PizzaId"><button type="button"
+                        class="btn btn-success">Edit</button></a> |
+                    <a asp-action="Delete" asp-route-id="@item.PizzaId"><button type="button"
+                        class="btn btn-danger">Delete</button></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
