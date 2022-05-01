@@ -32,7 +32,10 @@ namespace Avesdo.Controllers.API
         [HttpGet("{id}")]
         public async Task<ActionResult<Customers>> GetCustomers(int id)
         {
-            var customers = await _context.Customers.FindAsync(id);
+            // var customers = await _context.Customers.FindAsync(id);
+            var customers = await _context.Customers
+                .Include(o => o.Orders)
+                .FirstOrDefaultAsync(o => o.CustomerId == id);
 
             if (customers == null)
             {

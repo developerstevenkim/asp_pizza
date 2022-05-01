@@ -32,7 +32,10 @@ namespace Avesdo.Controllers.API
         [HttpGet("{id}")]
         public async Task<ActionResult<OrdPiz>> GetOrdPiz(int id)
         {
-            var ordPiz = await _context.OrdPizs.FindAsync(id);
+            var ordPiz = await _context.OrdPizs
+                .Include(p => p.Pizza)
+                .Include(o => o.Order)
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (ordPiz == null)
             {

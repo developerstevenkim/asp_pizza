@@ -32,7 +32,10 @@ namespace Avesdo.Controllers.API
         [HttpGet("{id}")]
         public async Task<ActionResult<PizTop>> GetPizTop(int id)
         {
-            var pizTop = await _context.PizTops.FindAsync(id);
+            var pizTop = await _context.PizTops
+                .Include(p => p.Pizza)
+                .Include(t => t.Topping)
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (pizTop == null)
             {
