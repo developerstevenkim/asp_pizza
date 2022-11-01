@@ -28,6 +28,12 @@ namespace Avesdo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable CORS
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -61,7 +67,7 @@ namespace Avesdo
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthentication();
