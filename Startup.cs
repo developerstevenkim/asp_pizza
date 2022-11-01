@@ -18,7 +18,6 @@ namespace Avesdo
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,14 +28,11 @@ namespace Avesdo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
+            // Enable CORS
+            services.AddCors(c =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    policy =>
-                    {
-                        policy.WithOrigins("https://avesdopizza.azurewebsites.net",
-                            "https://localhost:5001/");
-                    });
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                c.AddDefaultPolicy(options => options.AllowAnyOrigin());
             });
             
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -72,7 +68,7 @@ namespace Avesdo
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthentication();
